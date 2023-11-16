@@ -81,7 +81,7 @@ class UnbeatableAiPlayer(Player):
         super().__init__(letter)
 
     def make_move(self, game):
-        if len(game.assessible_moves()) == 8:
+        if len(game.assessible_moves()) == 9:
             tiles = random.choice(game.assessible_moves())
         else:
             tiles = self.minimax(game, self.letter)['position']
@@ -94,7 +94,7 @@ class UnbeatableAiPlayer(Player):
         if game.current_winner == other_player:
             return {'position': None,
                     'score': 1 * (game.num_empty_squares() + 1) if other_player == max_player else -1 *
-                        game.num_empty_squares() + 1
+                        (game.num_empty_squares() + 1)
                     }
 
         elif not game.num_empty_squares():
@@ -120,4 +120,6 @@ class UnbeatableAiPlayer(Player):
             else:
                 if sim_score['score'] < optimal['score']:
                     optimal = sim_score
+
         return optimal
+
