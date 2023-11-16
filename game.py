@@ -1,6 +1,6 @@
 import time
 
-from player import HumanPlayer, RandomComputerPlayer
+from player import HumanPlayer, RandomComputerPlayer, UnbeatableAiPlayer
 
 class TicTacToe:
     #"""Class representing the Tic-Tac-Toe game."""
@@ -130,7 +130,7 @@ def play_again():
 if __name__ == "__main__":
     while True:
         x_player = HumanPlayer('X')
-        o_player = RandomComputerPlayer('O')
+        o_player = UnbeatableAiPlayer('O')
         t = TicTacToe()
         play(t, x_player, o_player, print_game=True)
 

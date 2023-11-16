@@ -75,3 +75,49 @@ class HumanPlayer(Player):
                 print('Invalid input, try again.')
 
         return val
+    
+class UnbeatableAiPlayer(Player):
+    def __init__(self, letter):
+        super().__init__(letter)
+
+    def make_move(self, game):
+        if len(game.assessible_moves()) == 8:
+            tiles = random.choice(game.assessible_moves())
+        else:
+            tiles = self.minimax(game, self.letter)['position']
+        return tiles
+
+    def minimax(self, game, player):
+        max_player = self.letter
+        other_player = 'O' if player == 'X' else 'X'
+
+        if game.current_winner == other_player:
+            return {'position': None,
+                    'score': 1 * (game.num_empty_squares() + 1) if other_player == max_player else -1 *
+                        game.num_empty_squares() + 1
+                    }
+
+        elif not game.num_empty_squares():
+            return {'position': None, 'score': 0}
+
+        if player == max_player:
+            optimal = {'position': None, 'score': -math.inf}
+        else:
+            optimal = {'position': None, 'score': math.inf}
+
+        for possible_move in game.assessible_moves():
+            game.make_move(possible_move, player)
+
+            sim_score = self.minimax(game, other_player)
+
+            game.board[possible_move] = ' '
+            game.current_winner = None
+            sim_score['position'] = possible_move
+
+            if player == max_player:
+                if sim_score['score'] > optimal['score']:
+                    optimal = sim_score
+            else:
+                if sim_score['score'] < optimal['score']:
+                    optimal = sim_score
+        return optimal
