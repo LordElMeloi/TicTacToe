@@ -4,7 +4,7 @@ import random
 
 
 class Player:
-    #"""Base class for players in the Tic-Tac-Toe game."""
+    #"""Base class for players in the Tic-Tac-Toe game.
     def __init__(self, letter):
         ##Initializes a new player.
 
